@@ -1,5 +1,5 @@
 # Dockerfile Bareos storage daemon
-FROM arm32v7/alpine:3.21.0
+FROM arm32v7/alpine:3.17.0
 
 LABEL maintainer="barcus@tou.nu"
 
