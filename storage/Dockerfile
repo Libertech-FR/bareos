@@ -1,5 +1,5 @@
 # Dockerfile Bareos storage daemon
-FROM alpine:3.21.0
+FROM arm32v7/alpine:3.21.0
 
 LABEL maintainer="barcus@tou.nu"
 
@@ -21,7 +21,7 @@ RUN apk add --no-cache bareos bareos-storage tar
 
 RUN tar czf /bareos-sd.tgz /etc/bareos/bareos-sd.d
 RUN mkdir /run/bareos \
- && chown bareos /run/bareos
+      && chown bareos /run/bareos
 
 COPY docker-entrypoint.sh /docker-entrypoint.sh
 RUN chmod u+x /docker-entrypoint.sh

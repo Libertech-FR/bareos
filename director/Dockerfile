@@ -1,5 +1,5 @@
 # Bareos director Dockerfile
-FROM alpine:3.21
+FROM arm32v7/alpine:3.21
 
 LABEL maintainer="aide@libertech.fr"
 
@@ -21,7 +21,7 @@ RUN apk add --no-cache bareos bareos-postgresql postgresql-client curl tzdata ta
 
 RUN tar czf /bareos-dir.tgz /etc/bareos
 RUN mkdir /run/bareos \
- && chown bareos /run/bareos
+      && chown bareos /run/bareos
 
 COPY webhook-notify /usr/local/bin/webhook-notify
 RUN chmod u+x /usr/local/bin/webhook-notify
