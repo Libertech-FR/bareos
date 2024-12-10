@@ -17,6 +17,8 @@ LABEL org.label-schema.schema-version="1.0" \
 
 SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
 
+RUN sed -i 's|http://dl-cdn.alpinelinux.org/alpine/v3.[^/]*\/community|http://dl-cdn.alpinelinux.org/alpine/edge/community|' /etc/apk/repositories
+
 RUN apk add --no-cache bareos bareos-storage tar
 
 RUN tar czf /bareos-sd.tgz /etc/bareos/bareos-sd.d
