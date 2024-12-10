@@ -1,5 +1,5 @@
 # Bareos director Dockerfile
-FROM arm32v7/alpine:3.21
+FROM arm32v7/alpine:3.19
 
 LABEL maintainer="aide@libertech.fr"
 
