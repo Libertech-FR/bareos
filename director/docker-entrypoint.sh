@@ -82,7 +82,10 @@ if [ ! -f /etc/bareos/bareos-config.control ]; then
   # Control file
   touch /etc/bareos/bareos-config.control
 fi
-
+# test if scrip is here case of migration from debian 
+if [ ! -d /etc/bareos/scripts ];then
+   tar -xzf /bareos-dir.tgz etc/bareos/scripts 
+fi
 if [[ -z ${CI_TEST} ]] ; then
   # Waiting Postgresql is up
   sqlup=1

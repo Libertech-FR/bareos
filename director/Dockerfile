@@ -17,9 +17,10 @@ LABEL org.label-schema.schema-version="1.0" \
 
 SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
 
-RUN apk add --no-cache bareos bareos-postgresql postgresql-client curl tzdata tar
+RUN apk add --no-cache bareos bareos-postgresql postgresql-client curl tzdata tar bash iputils-ping
 
 RUN tar czf /bareos-dir.tgz /etc/bareos
+RUN mv /etc/bareos/scripts /usr/lib/bareos/scripts
 RUN mkdir /run/bareos \
  && chown bareos /run/bareos
 
