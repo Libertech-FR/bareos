@@ -83,7 +83,8 @@ if [ ! -f /etc/bareos/bareos-config.control ]; then
   touch /etc/bareos/bareos-config.control
 fi
 # test if scrip is here case of migration from debian 
-if [ ! -d /etc/bareos/scripts ] ; then
+if [ ! -d /etc/bareos/scripts ]; then
+   echo "init scripts dir"
    tar -xzf /bareos-dir.tgz etc/bareos/scripts 
 fi
 if [[ -z ${CI_TEST} ]] ; then
