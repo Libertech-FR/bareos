@@ -20,3 +20,4 @@ find /dev -regex "/dev/tape/.*" ! -user bareos -exec chown bareos {} \;
 
 # Run Dockerfile CMD
 exec "$@"
+

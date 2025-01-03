@@ -1,5 +1,5 @@
 # Bareos Web-ui Dockerfile
-FROM arm32v7/alpine:3.20
+FROM alpine:3.21
 
 RUN apk add --no-cache bareos-webui-nginx
 

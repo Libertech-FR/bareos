@@ -1,6 +1,5 @@
-#!/usr/bin/env sh
 
-job_type=$1
+b_type=$1
 job_status=$2
 job_client=$3
 job_level=$4

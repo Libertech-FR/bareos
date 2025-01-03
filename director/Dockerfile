@@ -1,7 +1,7 @@
 # Bareos director Dockerfile
-FROM ubuntu:focal
+FROM alpine:3.21
 
-LABEL maintainer="barcus@tou.nu"
+LABEL maintainer="aa@libertech.fr"
 
 ARG BUILD_DATE
 ARG NAME
@@ -15,36 +15,13 @@ LABEL org.label-schema.schema-version="1.0" \
       org.label-schema.vcs-url="https://github.com/barcus/bareos" \
       org.label-schema.version=$VERSION
 
-ENV DEBIAN_FRONTEND noninteractive
-ENV BAREOS_KEY http://download.bareos.org/bareos/release/21/xUbuntu_20.04/Release.key
-ENV BAREOS_REPO http://download.bareos.org/bareos/release/21/xUbuntu_20.04/
-ENV BAREOS_DPKG_CONF bareos-database-common bareos-database-common
+SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
 
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-
-RUN apt-get update -qq \
- && apt-get -qq -y install --no-install-recommends curl tzdata gnupg awscli openssh-client\
- && curl -Ls $BAREOS_KEY -o /tmp/bareos.key \
- && apt-key --keyring /etc/apt/trusted.gpg.d/breos-keyring.gpg \
-    add /tmp/bareos.key \
- && echo "deb $BAREOS_REPO /" > /etc/apt/sources.list.d/bareos.list \
- && echo "${BAREOS_DPKG_CONF}/dbconfig-install boolean false" \
-    | debconf-set-selections \
- && echo "${BAREOS_DPKG_CONF}/install-error select ignore" \
-    | debconf-set-selections \
- && echo "${BAREOS_DPKG_CONF}/database-type select pgsql" \
-    | debconf-set-selections \
- && echo "${BAREOS_DPKG_CONF}/missing-db-package-error select ignore" \
-    | debconf-set-selections \
- && echo 'postfix postfix/main_mailer_type select No configuration' \
-    | debconf-set-selections \
- && apt-get update -qq \
- && apt-get install -qq -y --no-install-recommends \
-    bareos postgresql-client bareos-tools \
- && apt-get clean \
- && rm -rf /var/lib/apt/lists/*
+RUN apk add --no-cache bareos bareos-postgresql postgresql-client curl tzdata tar
 
 RUN tar czf /bareos-dir.tgz /etc/bareos
+RUN mkdir /run/bareos \
+ && chown bareos /run/bareos
 
 COPY webhook-notify /usr/local/bin/webhook-notify
 RUN chmod u+x /usr/local/bin/webhook-notify
@@ -55,7 +32,7 @@ RUN chmod u+x /docker-entrypoint.sh
 EXPOSE 9101
 
 VOLUME /etc/bareos
+VOLUME /var/lib/bareos
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["/usr/sbin/bareos-dir", "-u", "bareos", "-f"]
-
