@@ -81,7 +81,7 @@ jobs:
           labels: ${{ steps.metaWebui.outputs.labels }}
           platforms: linux/amd64
 
-      # Process for the `webui` subfolder
+      # Process for the `client` subfolder
       - name: Extract metadata (tags, labels) for Docker (client)
         id: metaClient
         uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
@@ -96,7 +96,7 @@ jobs:
         with:
           context: ./client
           push: true
-          tags: ${{ steps.metaWebui.outputs.tags }}
-          labels: ${{ steps.metaWebui.outputs.labels }}
+          tags: ${{ steps.metaClient.outputs.tags }}
+          labels: ${{ steps.metaClient.outputs.labels }}
           platforms: linux/amd64
 
