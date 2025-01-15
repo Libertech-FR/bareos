@@ -1,2 +1,2 @@
 # bareos
-Bareos for armv7
+Bareos 23 

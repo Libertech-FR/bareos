@@ -17,7 +17,7 @@ LABEL org.label-schema.schema-version="1.0" \
 
 SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
 
-RUN apk add --no-cache bareos bareos-postgresql postgresql-client curl tzdata tar bash iputils-ping
+RUN apk add --no-cache bareos bareos-postgresql postgresql-client curl tzdata tar bash iputils-ping perl
 
 RUN tar czf /bareos-dir.tgz /etc/bareos
 RUN mv /etc/bareos/scripts /usr/lib/bareos/scripts
@@ -28,6 +28,8 @@ COPY webhook-notify /usr/local/bin/webhook-notify
 RUN chmod u+x /usr/local/bin/webhook-notify
 
 COPY docker-entrypoint.sh /docker-entrypoint.sh
+
+COPY sendEmail.pl /usr/bin/sendEmail.pl
 RUN chmod u+x /docker-entrypoint.sh
 
 EXPOSE 9101
