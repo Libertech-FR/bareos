@@ -1,0 +1,10 @@
+services:
+  smtp:
+    #image: rapidfort/postfix-ib:latest
+    build: .
+    container_name: smtp
+    ports:
+      - "25:25"
+    environment:
+      - POSTFIX_RELAYHOST_PORT=25
+      - POSTFIX_MYNETWORKS=10.0.0.0/8
