@@ -14,8 +14,6 @@ jobs:
         include:
           - distro: bookworm
             image: debian:bookworm
-          - distro: trixie
-            image: debian:trixie
 
     steps:
       - name: Checkout repository
@@ -35,6 +33,7 @@ jobs:
           cd bareos
           git fetch --all
           git checkout Release/24.0.4   # ex: Release/24.0.4
+          echo install\(FILES "${CMAKE_BINARY_DIR}/debian/bareos-filedaemon.service" DESTINATION lib/systemd/system\) >>CMakeLists.txt
       - name: Extract version from tag
         id: vars
         run: echo "VERSION=${GITHUB_REF_NAME#Release/}" >> $GITHUB_ENV
@@ -44,11 +43,6 @@ jobs:
           mkdir -p build
           cd build
 
-          # Copier scripts Debian
-          cp ../debian/bareos-filedaemon.preinst  debian/preinst
-          cp ../debian/bareos-filedaemon.postinst debian/postinst
-          chmod +x debian/preinst debian/postinst
-
           cmake -Dclient-only=ON \
                 -DCMAKE_INSTALL_PREFIX=/usr \
                 -DCPACK_PACKAGE_CONTACT="Libertech <contact@libertech.fr>" \
@@ -57,7 +51,10 @@ jobs:
                 -DCPACK_DEBIAN_PACKAGE_DEPENDS="libssl3, zlib1g, libacl1, liblzo2-2, libjansson4, libreadline8" \
                 -DCPACK_DEBIAN_PACKAGE_CONTROL_EXTRA="$(pwd)/debian/preinst;$(pwd)/debian/postinst" \
                 ..
-
+          # Copier scripts Debian
+          cp debian/bareos-filedaemon.preinst  debian/preinst
+          cp debian/bareos-filedaemon.postinst debian/postinst
+          chmod +x debian/preinst debian/postinst
           make -j$(nproc)
           cpack -G DEB
 
