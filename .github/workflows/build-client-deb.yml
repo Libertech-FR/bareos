@@ -41,6 +41,8 @@ jobs:
       - name: Extract version from tag
         id: vars
         run: echo "VERSION=${GITHUB_REF_NAME#Release/}" >> $GITHUB_ENV
+      - name: check work space 
+        run: find $GITHUB_WORKSPACE
       - name: Build Bareos Client
         working-directory: ./bareos-repo
         run: |
