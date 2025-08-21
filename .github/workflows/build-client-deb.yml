@@ -43,13 +43,11 @@ jobs:
         id: vars
         run: echo "VERSION=${GITHUB_REF_NAME#Release/}" >> $GITHUB_ENV
       - name: check work space 
-        run: ls $GITHUB_WORKSPACE/bareos-repo
+        run: ls -lisa $GITHUB_WORKSPACE/bareos-repo/build
       - name: Build Bareos Client
-        working-directory: ./bareos-repo
+        working-directory: ./bareos-repo/build
         run: |
-          ls 
-          cd ./build
-          ls
+          ls -lisa
           cmake -Dclient-only=ON \
                 -DCMAKE_INSTALL_PREFIX=/usr \
                 -DCPACK_PACKAGE_CONTACT="Libertech <contact@libertech.fr>" \
