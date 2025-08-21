@@ -2,8 +2,8 @@ name: Build Bareos Client DEB
 
 on:
   push:
-    tags:
-      - "Release/*"
+    branches:
+      - main
 
 jobs:
   build-deb:
