@@ -29,9 +29,9 @@ jobs:
 
       - name: Clone Bareos
         run: |
-          git clone https://github.com/bareos/bareos.git
+          git clone https://github.com/bareos/bareos.git bareos-repo
       - name: checkout release 
-        working-directory: ./bareos
+        working-directory: ./bareos-repo
         run: |
           git fetch --all
           git checkout Release/24.0.4   # ex: Release/24.0.4
@@ -42,7 +42,7 @@ jobs:
         id: vars
         run: echo "VERSION=${GITHUB_REF_NAME#Release/}" >> $GITHUB_ENV
       - name: Build Bareos Client
-        working-directory: bareos/build
+        working-directory: bareos-repo/build
         run: |
           cmake -Dclient-only=ON \
                 -DCMAKE_INSTALL_PREFIX=/usr \
@@ -63,11 +63,11 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: bareos-client-deb-{{ matrix.distro }}
-          path: bareos/build/*.deb
+          path: bareos-repo/build/*.deb
 
       - name: Attach DEB to GitHub Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          files: bareos/build/*.deb
+          files: bareos-repo/build/*.deb
 
