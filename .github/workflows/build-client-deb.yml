@@ -36,17 +36,18 @@ jobs:
           git fetch --all
           git checkout Release/24.0.4   # ex: Release/24.0.4
           echo install\(FILES "${CMAKE_BINARY_DIR}/debian/bareos-filedaemon.service" DESTINATION lib/systemd/system\) >>CMakeLists.txt
-          mkdir build
+          mkdir ./build
 
       - name: Extract version from tag
         id: vars
         run: echo "VERSION=${GITHUB_REF_NAME#Release/}" >> $GITHUB_ENV
       - name: check work space 
-        run: find $GITHUB_WORKSPACE
+        run: ls $GITHUB_WORKSPACE/bareos-repo
       - name: Build Bareos Client
-        working-directory: ./bareos-repo
+        working-directory: ./bareos-repo/build
         run: |
           cd build
+          ls
           cmake -Dclient-only=ON \
                 -DCMAKE_INSTALL_PREFIX=/usr \
                 -DCPACK_PACKAGE_CONTACT="Libertech <contact@libertech.fr>" \
