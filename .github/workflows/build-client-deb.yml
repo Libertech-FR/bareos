@@ -36,6 +36,8 @@ jobs:
           git fetch --all
           git checkout Release/24.0.4   # ex: Release/24.0.4
           echo install\(FILES "${CMAKE_BINARY_DIR}/debian/bareos-filedaemon.service" DESTINATION lib/systemd/system\) >>CMakeLists.txt
+          mkdir build
+
       - name: Extract version from tag
         id: vars
         run: echo "VERSION=${GITHUB_REF_NAME#Release/}" >> $GITHUB_ENV
