@@ -59,13 +59,14 @@ jobs:
                 -DCPACK_DEBIAN_PACKAGE_MAINTAINER="Libertech <contact@libertech.fr>" \
                 -DCPACK_DEBIAN_PACKAGE_DEPENDS="libssl3, zlib1g, libacl1, liblzo2-2, libjansson4, libreadline8" \
                 -DCPACK_DEBIAN_PACKAGE_CONTROL_EXTRA="debian/preinst;debian/postinst" ..
-          # Copier scripts Debian
+          make -j$(nproc)
+      - name: Make DEB package
+        working-directory: ./bareos-repo/build
+        run: |
           cp ./debian/bareos-filedaemon.preinst  ./debian/preinst
           cp ./debian/bareos-filedaemon.postinst ./debian/postinst
           chmod +x ./debian/preinst ./debian/postinst
-          make -j$(nproc)
           cpack -G DEB
-
       - name: Upload DEB as artifact
         uses: actions/upload-artifact@v4
         with:
