@@ -52,7 +52,7 @@ jobs:
           echo "=== Listing ==="
           ls -la
           echo "=== cmake ==="
-          cmake -S . -B build -Dclient-only=ON \
+          cmake -S . -B build -Dclient-only=ON -Dwebui=OFF\
                 -DCMAKE_INSTALL_PREFIX=/usr \
                 -DCPACK_PACKAGE_CONTACT="contact@libertech.fr" \
                 -DCPACK_PACKAGE_VERSION="24.0.4" \
