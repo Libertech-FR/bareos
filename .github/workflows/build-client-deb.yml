@@ -27,7 +27,9 @@ jobs:
           cd bareos
           git fetch --all
           git checkout ${{ github.ref_name }}   # ex: Release/24.0.4
-
+      - name: Extract version from tag
+        id: vars
+          run: echo "VERSION=${GITHUB_REF_NAME#Release/}" >> $GITHUB_ENV
       - name: Build Bareos Client
         working-directory: bareos
         run: |
@@ -42,7 +44,7 @@ jobs:
           cmake -Dclient-only=ON \
                 -DCMAKE_INSTALL_PREFIX=/usr \
                 -DCPACK_PACKAGE_CONTACT="Libertech <contact@libertech.fr>" \
-                -DCPACK_PACKAGE_VERSION=${{ github.ref_name.replace('Release/', '') }} \ 
+                -DCPACK_PACKAGE_VERSION=$VERSION \ 
                 -DCPACK_DEBIAN_PACKAGE_MAINTAINER="Libertech <contact@libertech.fr>" \
                 -DCPACK_DEBIAN_PACKAGE_DEPENDS="libssl3, zlib1g, libacl1, liblzo2-2, libjansson4, libreadline8" \
                 -DCPACK_DEBIAN_PACKAGE_CONTROL_EXTRA="$(pwd)/debian/preinst;$(pwd)/debian/postinst" \
