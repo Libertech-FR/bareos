@@ -42,7 +42,7 @@ jobs:
         run: |
           mkdir -p build
           cd build
-
+          echo $pwd
           cmake -Dclient-only=ON \
                 -DCMAKE_INSTALL_PREFIX=/usr \
                 -DCPACK_PACKAGE_CONTACT="Libertech <contact@libertech.fr>" \
