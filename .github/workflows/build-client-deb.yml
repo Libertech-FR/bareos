@@ -42,7 +42,7 @@ jobs:
           cmake -Dclient-only=ON \
                 -DCMAKE_INSTALL_PREFIX=/usr \
                 -DCPACK_PACKAGE_CONTACT="Libertech <contact@libertech.fr>" \
-                -DCPACK_PACKAGE_VERSION=${{ github.ref_name##*/ }} \
+                -DCPACK_PACKAGE_VERSION=${{ github.ref_name.replace('Release/', '') }} \ 
                 -DCPACK_DEBIAN_PACKAGE_MAINTAINER="Libertech <contact@libertech.fr>" \
                 -DCPACK_DEBIAN_PACKAGE_DEPENDS="libssl3, zlib1g, libacl1, liblzo2-2, libjansson4, libreadline8" \
                 -DCPACK_DEBIAN_PACKAGE_CONTROL_EXTRA="$(pwd)/debian/preinst;$(pwd)/debian/postinst" \
