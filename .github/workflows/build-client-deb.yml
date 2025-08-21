@@ -37,6 +37,7 @@ jobs:
           git checkout Release/24.0.4   # ex: Release/24.0.4
           echo install\(FILES "${CMAKE_BINARY_DIR}/debian/bareos-filedaemon.service" DESTINATION lib/systemd/system\) >>CMakeLists.txt
           mkdir ./build
+          ls
 
       - name: Extract version from tag
         id: vars
@@ -46,7 +47,6 @@ jobs:
       - name: Build Bareos Client
         working-directory: ./bareos-repo/build
         run: |
-          cd build
           ls
           cmake -Dclient-only=ON \
                 -DCMAKE_INSTALL_PREFIX=/usr \
