@@ -49,7 +49,7 @@ jobs:
                 -DCPACK_PACKAGE_VERSION=24.0.4 \ 
                 -DCPACK_DEBIAN_PACKAGE_MAINTAINER="Libertech <contact@libertech.fr>" \
                 -DCPACK_DEBIAN_PACKAGE_DEPENDS="libssl3, zlib1g, libacl1, liblzo2-2, libjansson4, libreadline8" \
-                -DCPACK_DEBIAN_PACKAGE_CONTROL_EXTRA="$(pwd)/debian/preinst;$(pwd)/debian/postinst" \
+                -DCPACK_DEBIAN_PACKAGE_CONTROL_EXTRA="debian/preinst;debian/postinst" \
                 ..
           # Copier scripts Debian
           cp debian/bareos-filedaemon.preinst  debian/preinst
