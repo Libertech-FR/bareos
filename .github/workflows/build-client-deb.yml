@@ -29,7 +29,7 @@ jobs:
           git checkout ${{ github.ref_name }}   # ex: Release/24.0.4
       - name: Extract version from tag
         id: vars
-          run: echo "VERSION=${GITHUB_REF_NAME#Release/}" >> $GITHUB_ENV
+        run: echo "VERSION=${GITHUB_REF_NAME#Release/}" >> $GITHUB_ENV
       - name: Build Bareos Client
         working-directory: bareos
         run: |
