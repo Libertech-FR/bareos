@@ -49,18 +49,18 @@ jobs:
         run: |
           ls 
           cd ./build
+          ls
           cmake -Dclient-only=ON \
                 -DCMAKE_INSTALL_PREFIX=/usr \
                 -DCPACK_PACKAGE_CONTACT="Libertech <contact@libertech.fr>" \
                 -DCPACK_PACKAGE_VERSION=24.0.4 \ 
                 -DCPACK_DEBIAN_PACKAGE_MAINTAINER="Libertech <contact@libertech.fr>" \
                 -DCPACK_DEBIAN_PACKAGE_DEPENDS="libssl3, zlib1g, libacl1, liblzo2-2, libjansson4, libreadline8" \
-                -DCPACK_DEBIAN_PACKAGE_CONTROL_EXTRA="debian/preinst;debian/postinst" \
-                 $GITHUB_WORKSPACE/bareos-repo
+                -DCPACK_DEBIAN_PACKAGE_CONTROL_EXTRA="debian/preinst;debian/postinst" ..
           # Copier scripts Debian
-          cp debian/bareos-filedaemon.preinst  debian/preinst
-          cp debian/bareos-filedaemon.postinst debian/postinst
-          chmod +x debian/preinst debian/postinst
+          cp ./debian/bareos-filedaemon.preinst  ./debian/preinst
+          cp ./debian/bareos-filedaemon.postinst ./debian/postinst
+          chmod +x ./debian/preinst ./debian/postinst
           make -j$(nproc)
           cpack -G DEB
 
