@@ -7,7 +7,7 @@ on:
 
 jobs:
   build-deb:
-    runs-on: ubuntu-22.04
+    runs-on: debian:bookworm
     strategy:
       fail-fast: false
       matrix:
@@ -69,7 +69,6 @@ jobs:
 
       - name: Attach DEB to GitHub Release
         uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/tags/')
         with:
           files: bareos-repo/build/*.deb
 
