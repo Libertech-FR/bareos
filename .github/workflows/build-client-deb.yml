@@ -33,7 +33,7 @@ jobs:
         run: |
           git fetch --all
           # récupère la version depuis le fichier VERSION
-          VERSION=$(cat VERSION | tr -d ' \n')
+          VERSION=$(cat VERSION.txt | tr -d ' \n')
           echo "VERSION=$VERSION" >> $GITHUB_ENV
           git checkout Release/$VERSION
           mkdir build
