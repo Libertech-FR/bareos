@@ -43,7 +43,13 @@ jobs:
         working-directory: ./bareos-repo
         run: |
           mkdir build-client
-          cmake -S . -B build-client -Dclient-only=ON ...
+          cmake -S . -B build-client -Dclient-only=ON \
+                -DCMAKE_INSTALL_PREFIX=/usr \
+                -DCPACK_PACKAGE_CONTACT="contact@libertech.fr" \
+                -DCPACK_PACKAGE_VERSION="${VERSION}" \
+                -DCPACK_DEBIAN_PACKAGE_MAINTAINER="contact@libertech.fr" \
+                -DCPACK_DEBIAN_PACKAGE_DEPENDS="libssl3, zlib1g, libacl1, liblzo2-2, libjansson4, libreadline8" \
+                -DCPACK_DEBIAN_PACKAGE_CONTROL_EXTRA="debian/preinst;debian/postinst"
           # copie des scripts pre/postinst si dispo
           cp ./debian/*.preinst ./debian/preinst 2>/dev/null || true
           cp ./debian/*.postinst ./debian/postinst 2>/dev/null || true
