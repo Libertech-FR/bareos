@@ -63,11 +63,29 @@ jobs:
           # génération des paquets pour tous les composants
           cpack -G DEB
 
-      - name: Upload DEBs as artifact
+      - name: Upload Filedaemon DEB
         uses: actions/upload-artifact@v4
         with:
-          name: bareos-all-${{ env.VERSION }}
-          path: bareos-repo/build/*.deb
+          name: bareos-filedaemon-${{ env.VERSION }}
+          path: bareos-repo/build/*filedaemon*.deb
+
+      - name: Upload Director DEB
+        uses: actions/upload-artifact@v4
+        with:
+          name: bareos-director-${{ env.VERSION }}
+          path: bareos-repo/build/*director*.deb
+
+      - name: Upload Storage DEB
+        uses: actions/upload-artifact@v4
+        with:
+          name: bareos-storage-${{ env.VERSION }}
+          path: bareos-repo/build/*storage*.deb
+
+      - name: Upload WebUI DEB
+        uses: actions/upload-artifact@v4
+        with:
+          name: bareos-webui-${{ env.VERSION }}
+          path: bareos-repo/build/*webui*.deb
 
       - name: Attach DEBs to GitHub Release
         uses: softprops/action-gh-release@v1
