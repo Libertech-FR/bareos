@@ -51,12 +51,12 @@ jobs:
                 -DCPACK_DEBIAN_PACKAGE_DEPENDS="libssl3, zlib1g, libacl1, liblzo2-2, libjansson4, libreadline8" \
                 -DCPACK_DEBIAN_PACKAGE_CONTROL_EXTRA="debian/preinst;debian/postinst"
           # copie des scripts pre/postinst si dispo
-          cp ./debian/*.preinst ./debian/preinst 2>/dev/null || true
-          cp ./debian/*.postinst ./debian/postinst 2>/dev/null || true
-          chmod +x ./debian/preinst ./debian/postinst || true
+          cp ./build-client/debian/*.preinst ./build-client/debian/preinst 2>/dev/null || true
+          cp ./build-client/debian/*.postinst ./build-client/debian/postinst 2>/dev/null || true
+          chmod +x ./build-client/debian/preinst ./build-client/debian/postinst || true
           cmake --build build-client -- -j$(nproc)
           (cd build-client && cpack -G DEB)
-          ls -lh *.deb 
+          ls -lh * 
 
       - name: Upload Filedaemon DEB
         uses: actions/upload-artifact@v4
