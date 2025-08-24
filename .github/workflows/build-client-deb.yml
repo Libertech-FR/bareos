@@ -44,7 +44,7 @@ jobs:
         working-directory: ./bareos-repo
         run: |
           echo install\(FILES "build-client/debian/bareos-filedaemon.service" DESTINATION lib/systemd/system\) >>CMakeLists.txt
-          echo set\(CPACK_DEBIAN_CLIENT_PACKAGE_NAME "bareos-client"\) >>CMakeLists.txt
+          echo set\(CPACK_PACKAGE_FILE_NAME "bareos-fd-${CPACK_PACKAGE_VERSION}"\) >>CMakeLists.txt
           mkdir build-client
           cmake -S . -B build-client -Dclient-only=ON \
                 -DCMAKE_INSTALL_PREFIX=/usr \
