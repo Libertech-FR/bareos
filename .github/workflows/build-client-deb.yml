@@ -55,16 +55,17 @@ jobs:
           cp ./build-client/debian/*.postinst ./build-client/debian/postinst 2>/dev/null || true
           chmod +x ./build-client/debian/preinst ./build-client/debian/postinst || true
           cmake --build build-client -- -j$(nproc)
-          (cd build-client && cpack -G DEB)
+          cd build-client
+          cpack -G DEB
           echo "--- contents ---"
-          ls -lisa * 
+          ls -lisa *.deb 
           echo "--- end ---"
 
       - name: Upload Filedaemon DEB
         uses: actions/upload-artifact@v4
         with:
           name: bareos-filedaemon-${{ env.VERSION }}
-          path: bareos-repo/build-client/*filedaemon*.deb
+          path: bareos-repo/build-client/*.deb
 
       - name: Attach DEBs to GitHub Release
         uses: softprops/action-gh-release@v1
