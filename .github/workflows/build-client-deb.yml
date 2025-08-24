@@ -62,6 +62,8 @@ jobs:
           chmod +x ./debian/preinst ./debian/postinst || true
           # génération des paquets pour tous les composants
           cpack -G DEB
+          echo "=== Packages générés ==="
+          ls -lh *.deb
 
       - name: Upload Filedaemon DEB
         uses: actions/upload-artifact@v4
