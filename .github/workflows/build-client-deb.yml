@@ -64,6 +64,8 @@ jobs:
           echo "--- contents ---"
           ls -lisa *.deb
           echo "--- end ---"
+          mv bareos-${VERSION}-Linux.deb bareos-fd-${VERSION}-Linux.deb
+         
       - name: Upload Filedaemon DEB
         uses: actions/upload-artifact@v4
         with:
