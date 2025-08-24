@@ -28,14 +28,17 @@ jobs:
       - name: Clone Bareos
         run: git clone https://github.com/bareos/bareos.git bareos-repo
 
+      - name: Extract version from VERSION File
+        id: vars
+        run: |
+          VERSION=$(cat VERSION | tr -d ' \n')
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
       - name: Checkout release
         working-directory: ./bareos-repo
         run: |
           git fetch --all
-          # récupère la version depuis le fichier VERSION
-          VERSION=$(cat VERSION.txt | tr -d ' \n')
-          echo "VERSION=$VERSION" >> $GITHUB_ENV
-          git checkout Release/$VERSION
+          git checkout Release/${VERSION}
           mkdir build
 
       - name: Configure CMake (tous composants)
