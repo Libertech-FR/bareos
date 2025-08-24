@@ -56,7 +56,9 @@ jobs:
           chmod +x ./build-client/debian/preinst ./build-client/debian/postinst || true
           cmake --build build-client -- -j$(nproc)
           (cd build-client && cpack -G DEB)
-          ls -lh * 
+          echo "--- contents ---"
+          ls -lisa * 
+          echo "--- end ---"
 
       - name: Upload Filedaemon DEB
         uses: actions/upload-artifact@v4
