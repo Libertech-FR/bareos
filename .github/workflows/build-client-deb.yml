@@ -39,9 +39,12 @@ jobs:
         run: |
           git fetch --all
           git checkout Release/${VERSION}
+          cp CMakeLists.txt CMakeLists.txt.save
       - name: Build Bareos Client
         working-directory: ./bareos-repo
         run: |
+          echo install\(FILES "build/debian/bareos-filedaemon.service" DESTINATION lib/systemd/system\) >>CMakeLists.txt
+          echo set\(CPACK_DEBIAN_CLIENT_PACKAGE_NAME "bareos-client"\) >>CMakeLists.txt
           mkdir build-client
           cmake -S . -B build-client -Dclient-only=ON \
                 -DCMAKE_INSTALL_PREFIX=/usr \
