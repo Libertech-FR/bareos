@@ -16,12 +16,11 @@ jobs:
       - name: Install build dependencies
         run: |
           sudo apt update
-          sudo apt install -y build-essential debhelper devscripts fakeroot \
-            cmake git \
+          sudo apt install -y build-essential cmake git \
             libssl-dev zlib1g-dev libacl1-dev liblzo2-dev \
             libjansson-dev bison flex \
-            libreadline-dev pkg-config
-
+            libreadline-dev pkg-config fakeroot \
+            chrpath libcap-dev qtbase5-dev libjson-c-dev mtx
       - name: Clone Bareos sources
         run: |
           git clone https://github.com/bareos/bareos.git bareos-repo
