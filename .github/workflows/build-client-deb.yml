@@ -19,7 +19,7 @@ jobs:
           sudo apt install -y build-essential cmake git \
             libssl-dev zlib1g-dev libacl1-dev liblzo2-dev \
             libjansson-dev bison flex python3-dev libpq-dev \
-            libreadline-dev pkg-config fakeroot libzma-dev liblzma-dev \
+            libreadline-dev pkg-config fakeroot liblzma-dev \
             chrpath libcap-dev qtbase5-dev libjson-c-dev mtx debhelper po-debconf
 
 
