@@ -20,7 +20,7 @@ jobs:
             libssl-dev zlib1g-dev libacl1-dev liblzo2-dev \
             libjansson-dev bison flex \
             libreadline-dev pkg-config fakeroot \
-            chrpath libcap-dev qtbase5-dev libjson-c-dev mtx
+            chrpath libcap-dev qtbase5-dev libjson-c-dev mtx debhelper po-debconf
 
 
       - name: Clone Bareos sources
