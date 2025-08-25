@@ -110,7 +110,7 @@ jobs:
       - name: Upload storage DEB
         uses: actions/upload-artifact@v4
         with:
-          name: bareos-filedaemon-${{ env.VERSION }}-${{ matrix.distro }}
+          name: bareos-storage-${{ env.VERSION }}-${{ matrix.distro }}
           path: bareos-repo/build-storage/*.deb
 
 
