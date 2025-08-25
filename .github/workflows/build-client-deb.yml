@@ -81,6 +81,41 @@ jobs:
           name: bareos-filedaemon-${{ env.VERSION }}-${{ matrix.distro }}
           path: bareos-repo/build-client/*.deb
 
+      - name: Build Bareos storage
+        working-directory: ./bareos-repo
+        run: |
+          cp CMakeLists.txt.save CMakeLists.txt
+          echo install\(FILES "build-client/debian/bareos-storage.service" DESTINATION lib/systemd/system\) >>CMakeLists.txt
+          echo set\(CPACK_PACKAGE_FILE_NAME "bareos-storage-${CPACK_PACKAGE_VERSION}"\) >>CMakeLists.txt
+          mkdir build-storage
+          cmake -S . -B build-storage -Dstorage-only=ON \
+                -DCMAKE_INSTALL_PREFIX=/usr \
+                -DCPACK_PACKAGE_CONTACT="contact@libertech.fr" \
+                -DCPACK_PACKAGE_VERSION="${VERSION}" \
+                -DCPACK_DEBIAN_PACKAGE_MAINTAINER="contact@libertech.fr" \
+                -DCPACK_DEBIAN_PACKAGE_DEPENDS="libssl3, zlib1g, libacl1, liblzo2-2, libjansson4, libreadline8" \
+                -DCPACK_DEBIAN_PACKAGE_CONTROL_EXTRA="debian/preinst;debian/postinst"
+          cmake --build build-storage -- -j$(nproc)
+
+      - name: Make CLIENT DEB package
+        working-directory: ./bareos-repo/build-storage
+        run: |
+          cp debian/bareos-storage.preinst  debian/preinst
+          cp debian/bareos-storage.postinst debian/postinst
+          chmod +x debian/preinst debian/postinst
+          cpack -G DEB
+          echo "--- contents ---"
+          ls -lisa *.deb
+          echo "--- end ---"
+          mv bareos-${VERSION}-Linux.deb bareos-storage-${VERSION}-${{ matrix.distro }}.deb
+
+      - name: Upload storage DEB
+        uses: actions/upload-artifact@v4
+        with:
+          name: bareos-filedaemon-${{ env.VERSION }}-${{ matrix.distro }}
+          path: bareos-repo/storage-client/*.deb
+
+
       - name: Attach DEBs to GitHub Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
