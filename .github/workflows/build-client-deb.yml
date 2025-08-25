@@ -15,8 +15,6 @@ jobs:
         include:
           - distro: bookworm
             image: debian:bookworm
-          - distro: trixie
-            image: debian:trixie
 
 
     steps:
@@ -97,7 +95,7 @@ jobs:
                 -DCPACK_DEBIAN_PACKAGE_CONTROL_EXTRA="debian/preinst;debian/postinst"
           cmake --build build-storage -- -j$(nproc)
 
-      - name: Make CLIENT DEB package
+      - name: Make STORAGE DEB package
         working-directory: ./bareos-repo/build-storage
         run: |
           cp debian/bareos-storage.preinst  debian/preinst
@@ -113,7 +111,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: bareos-filedaemon-${{ env.VERSION }}-${{ matrix.distro }}
-          path: bareos-repo/storage-client/*.deb
+          path: bareos-repo/build-storage/*.deb
 
 
       - name: Attach DEBs to GitHub Release
