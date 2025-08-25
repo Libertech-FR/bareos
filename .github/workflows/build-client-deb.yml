@@ -38,14 +38,11 @@ jobs:
       - name: Prepare debian/changelog
         working-directory: ./bareos-repo
         run: |
-          VERSION=$(cat VERSION)
-          cat > debian/changelog <<EOF
-bareos ($VERSION-1) unstable; urgency=medium
-
-  * Automated build from GitHub Actions.
-
- -- Libertech <contact@libertech.fr>  $(date -R)
-EOF
+          echo "bareos ($VERSION) stable; urgency=medium" > debian/changelog
+          echo "" >> debian/changelog
+          echo "  * Automated build from GitHub Actions." >> debian/changelog
+          echo "" >> debian/changelog
+          echo " -- Libertech <contact@libertech.fr>  $(date -R)" >> debian/changelog
           cat debian/changelog
 
       - name: Build all Bareos components
