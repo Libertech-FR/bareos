@@ -22,6 +22,7 @@ jobs:
             libreadline-dev pkg-config fakeroot \
             chrpath libcap-dev qtbase5-dev libjson-c-dev mtx
 
+
       - name: Clone Bareos sources
         run: |
           git clone https://github.com/bareos/bareos.git bareos-repo
