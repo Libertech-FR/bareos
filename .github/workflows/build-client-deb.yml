@@ -37,6 +37,9 @@ jobs:
       - name: Build DEB packages
         working-directory: ./bareos-repo
         run: |
+          # S'assurer que le changelog est là
+          ls -la debian
+          head -20 debian/changelog 
           # Installe les dépendances nécessaires déclarées dans debian/control
           sudo mk-build-deps -i -r -t "apt-get -y" debian/control
           # Lance la compilation de tous les paquets
