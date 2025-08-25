@@ -9,6 +9,15 @@ on:
 jobs:
   build-deb:
     runs-on: ubuntu-22.04
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - distro: bookworm
+            image: debian:bookworm
+          - distro: trixie
+            image: debian:trixie
+
 
     steps:
       - name: Checkout repository
@@ -64,12 +73,12 @@ jobs:
           echo "--- contents ---"
           ls -lisa *.deb
           echo "--- end ---"
-          mv bareos-${VERSION}-Linux.deb bareos-fd-${VERSION}-Linux.deb
+          mv bareos-${VERSION}-Linux.deb bareos-fd-${VERSION}-${{ matrix.distro }}.deb
          
       - name: Upload Filedaemon DEB
         uses: actions/upload-artifact@v4
         with:
-          name: bareos-filedaemon-${{ env.VERSION }}
+          name: bareos-filedaemon-${{ env.VERSION }}-${{ matrix.distro }}
           path: bareos-repo/build-client/*.deb
 
       - name: Attach DEBs to GitHub Release
