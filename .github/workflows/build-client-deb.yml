@@ -16,8 +16,11 @@ jobs:
       - name: Install build dependencies
         run: |
           sudo apt update
-          sudo apt install -y devscripts equivs
-          sudo mk-build-deps -i -r -t "apt-get -y" debian/control
+          sudo apt install -y build-essential cmake git \
+            libssl-dev zlib1g-dev libacl1-dev liblzo2-dev \
+            libjansson-dev bison flex \
+            libreadline-dev pkg-config fakeroot \
+            chrpath libcap-dev qtbase5-dev libjson-c-dev mtx
 
       - name: Clone Bareos sources
         run: |
