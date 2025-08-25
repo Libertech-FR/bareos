@@ -37,6 +37,7 @@ jobs:
       - name: Build DEB packages
         working-directory: ./bareos-repo
         run: |
+          cp CHANGELOG.md debian/changelog
           # S'assurer que le changelog est là
           ls -la debian
           head -20 debian/changelog 
