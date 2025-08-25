@@ -34,10 +34,20 @@ jobs:
         id: version
         run: echo "VERSION=$(cat bareos-repo/VERSION)" >> $GITHUB_ENV
 
+      - name: Prepare debian/changelog
+        working-directory: ./bareos-repo
+        run: |
+          VERSION=$(cat VERSION)
+          cat > debian/changelog <<EOF
+bareos ($VERSION-1) stable; urgency=medium
+
+  * Automated build from GitHub Actions.
+
+ -- Libertech <contact@libertech.fr>  $(date -R)
+EOF
       - name: Build DEB packages
         working-directory: ./bareos-repo
         run: |
-          cp CHANGELOG.md debian/changelog
           # S'assurer que le changelog est là
           ls -la debian
           head -20 debian/changelog 
