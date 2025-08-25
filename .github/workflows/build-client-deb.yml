@@ -26,15 +26,18 @@ jobs:
         run: |
           git clone https://github.com/bareos/bareos.git bareos-repo
 
+      - name: Extract version from VERSION File
+        id: vars
+        run: |
+          VERSION=$(cat VERSION | tr -d ' \n')
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
       - name: Checkout release
         working-directory: ./bareos-repo
         run: |
           git fetch --all
-          git checkout Release/24.0.4
-          # Lire la version dans le fichier VERSION
-          VERSION=$(cat VERSION)
-          echo "VERSION=$VERSION" >> $GITHUB_ENV
-
+          git checkout Release/$VERSION
+      
       - name: Prepare debian/changelog
         working-directory: ./bareos-repo
         run: |
