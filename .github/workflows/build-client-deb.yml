@@ -56,7 +56,7 @@ jobs:
       - name: Build all Bareos components
         working-directory: ./bareos-repo
         run: |
-          export DEB_CMAKE_EXTRA_FLAGS="-DPYTHON=OFF -DENABLE_GRPC=OFF"
+          export DEB_CMAKE_EXTRA_FLAGS="-DPYTHON_INSTALL_DIR=/usr/lib/python3/dist-packages"
           dpkg-buildpackage -us -uc -rfakeroot -b
 
       - name: Upload DEB packages
