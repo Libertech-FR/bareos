@@ -22,7 +22,8 @@ jobs:
             libreadline-dev pkg-config fakeroot liblzma-dev \
             chrpath libcap-dev qtbase5-dev libjson-c-dev mtx debhelper \
             po-debconf libxml2-dev libx11-dev libcli11-dev ncurses-dev openssl systemd \
-            libexpected-dev libfmt-dev libmsgsl-dev libutfcpp-dev 
+            libexpected-dev libfmt-dev libmsgsl-dev libutfcpp-dev \
+            libfastlz-dev libzstd-dev default-jdk-headless
 
 
       - name: Clone Bareos sources
@@ -54,7 +55,7 @@ jobs:
       - name: Build all Bareos components
         working-directory: ./bareos-repo
         run: |
-          dpkg-buildpackage -us -uc -b
+          dpkg-buildpackage -us -uc -rfakeroot -b
 
       - name: Upload DEB packages
         uses: actions/upload-artifact@v4
