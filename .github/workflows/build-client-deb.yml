@@ -23,7 +23,7 @@ jobs:
             chrpath libcap-dev qtbase5-dev libjson-c-dev mtx debhelper \
             po-debconf libxml2-dev libx11-dev libcli11-dev ncurses-dev openssl systemd \
             libexpected-dev libfmt-dev libmsgsl-dev libutfcpp-dev \
-            libfastlz-dev libzstd-dev default-jdk-headless
+            libzstd-dev default-jdk-headless
 
 
       - name: Clone Bareos sources
